@@ -1,34 +1,13 @@
 import fs from "fs/promises";
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getPdfFullText } from "./pdf.js";
 import { downloadPdfFromUrl } from "../download.js";
-
 export async function extractZemenReceiptData(url) {
   try {
     const pdfPath = await downloadPdfFromUrl(url);
 
     try {
       const pdfBuffer = await fs.readFile(pdfPath);
-
-      const pdf = await getDocument({
-        data: new Uint8Array(pdfBuffer),
-      }).promise;
-
-      const pageTexts = [];
-
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
-
-        const content = await page.getTextContent();
-
-        const text = content.items
-          .map((item) => item.str)
-          .join(" ");
-
-        pageTexts.push(text);
-      }
-
-      const fullText = pageTexts.join(" ").replace(/\n/g, " ");
-
+      const fullText = (await getPdfFullText(pdfBuffer)).replace(/\n/g, " ");
       const patterns = {
         invoiceNo: /Invoice No\.?:\s*(\d+)/,
         date: /Date[:\s]+([0-9]{1,2}-[A-Za-z]{3}-[0-9]{4})/,

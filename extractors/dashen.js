@@ -1,7 +1,6 @@
 import fs from "fs/promises";
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getPdfTextItems } from "./pdf.js";
 import { downloadPdfFromUrl } from "../download.js";
-
 function findNextValue(strings, index) {
   for (let i = index + 1; i < strings.length; i++) {
     const value = strings[i].trim();
@@ -56,21 +55,8 @@ export async function extractDashenReceiptData(url) {
 
   try {
     const buffer = await fs.readFile(pdfPath);
-
-    const pdf = await getDocument({
-      data: new Uint8Array(buffer),
-    }).promise;
-
-    const items = [];
-
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-      const page = await pdf.getPage(pageNum);
-      const content = await page.getTextContent();
-      items.push(...content.items);
-    }
-
+    const items = await getPdfTextItems(buffer);
     const fields = parseReceiptItems(items);
-
     const data = {
       sender_name: fields["Sender Name"] ?? null,
       channel: fields["Transaction Channel"] ?? null,

@@ -69,3 +69,13 @@ export async function extractBoaReceiptData(url) {
     await page.close();
   }
 }
+
+export async function closeBoaBrowser() {
+  if (!browserPromise) {
+    return;
+  }
+
+  const browser = await browserPromise;
+  await browser.close();
+  browserPromise = null;
+}
