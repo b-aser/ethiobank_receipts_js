@@ -1,0 +1,22 @@
+{
+  "name": "verifier",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.0",
+    "axios": "^1.17.0",
+    "cheerio": "^1.2.0",
+    "fs": "0.0.1-security",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^6.0.227",
+    "playwright": "^1.60.0",
+    "selenium-webdriver": "^4.15.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^1.0.0",
+    "@types/node": "^25.9.3",
+    "@types/selenium-webdriver": "^4.1.20"
+  }
+}
