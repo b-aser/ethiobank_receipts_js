@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "Node.js receipt extractors for Ethiopian banks and Telebirr",
   "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
   "dependencies": {
+    "express": "^5.1.0",
     "@napi-rs/canvas": "^1.0.0",
     "axios": "^1.17.0",
     "cheerio": "^1.2.0",
